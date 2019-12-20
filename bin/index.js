@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const fetch = require("node-fetch");
 const prettyjson = require("prettyjson");
 
