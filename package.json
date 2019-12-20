@@ -1,0 +1,12 @@
+{
+  "name": "dollarpe",
+  "version": "1.0.0",
+  "description": "dollar to peruvian sol exchange rate",
+  "main": "index.js",
+  "author": "cristianbgp <cristian.granda.pastor@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "isomorphic-unfetch": "^3.0.0",
+    "prettyjson": "^1.2.1"
+  }
+}
