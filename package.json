@@ -1,10 +1,11 @@
 {
   "name": "dollarpe",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "dollar to peruvian sol exchange rate",
   "main": "bin/index.js",
   "author": "cristianbgp <cristian.granda.pastor@gmail.com>",
   "license": "MIT",
+  "repository": "git@github.com:cristianbgp/dollarpe.git",
   "dependencies": {
     "node-fetch": "^2.6.0",
     "prettyjson": "^1.2.1"

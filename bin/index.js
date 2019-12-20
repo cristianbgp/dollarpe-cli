@@ -10,7 +10,7 @@ async function getRextieData() {
   return data;
 }
 
-async function buildDollarObject(params) {
+async function buildDollarObject() {
   const dollar = {};
   const rextieData = await getRextieData();
   dollar.rextie = {
