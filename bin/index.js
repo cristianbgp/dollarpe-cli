@@ -29,6 +29,12 @@ async function buildDollarObject() {
     accesorToBuy: data => data.tc.bid,
     accesorToSell: data => data.tc.ask
   });
+  dollar.tkambio = await getData({
+    url: "https://tkambio.com/wp-admin/admin-ajax.php?action=get_tipo_cambio",
+    method: "POST",
+    accesorToBuy: data => Number(data.buy_type_change),
+    accesorToSell: data => Number(data.sell_type_change)
+  });
   const result = Object.fromEntries(
     Object.entries(dollar).sort(buyCriteriaDesc)
   );
