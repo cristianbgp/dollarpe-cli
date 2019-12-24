@@ -1,15 +1,7 @@
 #! /usr/bin/env node
-const fetch = require("node-fetch");
 const prettyjson = require("prettyjson");
 const sortCriteriaGenerator = require("./sort-criteria");
-
-async function getData({ url, method = "GET", accesorToBuy, accesorToSell }) {
-  const response = await fetch(url, {
-    method: method
-  });
-  const data = await response.json();
-  return { buy: accesorToBuy(data), sell: accesorToSell(data) };
-}
+const getData = require("./get-data");
 
 const buyCriteriaDesc = sortCriteriaGenerator(item => item[1].buy, {
   desc: true
@@ -35,9 +27,12 @@ async function buildDollarObject() {
     accesorToBuy: data => Number(data.buy_type_change),
     accesorToSell: data => Number(data.sell_type_change)
   });
-  const result = Object.fromEntries(
-    Object.entries(dollar).sort(buyCriteriaDesc)
-  );
+  const result = Object.entries(dollar)
+  .sort(buyCriteriaDesc)
+  .reduce((acc, element) => {
+    acc[element[0]] = element[1];
+    return acc;
+  }, {})
   console.log(
     prettyjson.render(result, { numberColor: "white", keysColor: "cyan" })
   );
