@@ -1,6 +1,6 @@
 {
   "name": "dollarpe",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "dollar to peruvian sol exchange rate",
   "main": "bin/index.js",
   "author": "cristianbgp <cristian.granda.pastor@gmail.com>",
@@ -12,5 +12,9 @@
   },
   "bin": {
     "dollarpe": "./bin/index.js"
-  }
+  },
+  "keywords": [
+    "currency",
+    "dollar"
+  ]
 }
