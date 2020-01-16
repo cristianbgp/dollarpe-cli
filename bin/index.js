@@ -11,24 +11,26 @@ const greenText = text => `\x1b[32m${text}\x1b[0m`;
 
 async function buildDollarObject() {
   const dollar = {};
-  dollar.rextie = await getData({
-    url: "https://app.rextie.com/api/v1/fxrates/rate/",
-    method: "POST",
-    accesorToBuy: data => Number(data.fx_rate_buy),
-    accesorToSell: data => Number(data.fx_rate_sell)
-  });
-  dollar.kambista = await getData({
-    url:
-      "https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&active=S&amount=1",
-    accesorToBuy: data => data.tc.bid,
-    accesorToSell: data => data.tc.ask
-  });
-  dollar.tkambio = await getData({
-    url: "https://tkambio.com/wp-admin/admin-ajax.php?action=get_tipo_cambio",
-    method: "POST",
-    accesorToBuy: data => Number(data.sell_type_change),
-    accesorToSell: data => Number(data.buy_type_change)
-  });
+  [dollar.rextie, dollar.kambista, dollar.tkambio] = await Promise.all([
+    getData({
+      url: "https://app.rextie.com/api/v1/fxrates/rate/",
+      method: "POST",
+      accesorToBuy: data => Number(data.fx_rate_buy),
+      accesorToSell: data => Number(data.fx_rate_sell)
+    }),
+    getData({
+      url:
+        "https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&active=S&amount=1",
+      accesorToBuy: data => data.tc.bid,
+      accesorToSell: data => data.tc.ask
+    }),
+    getData({
+      url: "https://tkambio.com/wp-admin/admin-ajax.php?action=get_tipo_cambio",
+      method: "POST",
+      accesorToBuy: data => Number(data.sell_type_change),
+      accesorToSell: data => Number(data.buy_type_change)
+    })
+  ]);
   let result = Object.entries(dollar).sort(buyCriteriaDesc);
 
   result[0][1].buy = greenText(result[0][1].buy);
