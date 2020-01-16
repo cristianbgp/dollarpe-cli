@@ -7,6 +7,8 @@ const buyCriteriaDesc = sortCriteriaGenerator(item => item[1].buy, {
   desc: true
 });
 
+const greenText = text => `\x1b[32m${text}\x1b[0m`;
+
 async function buildDollarObject() {
   const dollar = {};
   dollar.rextie = await getData({
@@ -27,12 +29,15 @@ async function buildDollarObject() {
     accesorToBuy: data => Number(data.sell_type_change),
     accesorToSell: data => Number(data.buy_type_change)
   });
-  const result = Object.entries(dollar)
-    .sort(buyCriteriaDesc)
-    .reduce((acc, element) => {
-      acc[element[0]] = element[1];
-      return acc;
-    }, {});
+  let result = Object.entries(dollar).sort(buyCriteriaDesc);
+
+  result[0][1].buy = greenText(result[0][1].buy);
+  result[0][1].sell = greenText(result[0][1].sell);
+
+  result = result.reduce((acc, element) => {
+    acc[element[0]] = element[1];
+    return acc;
+  }, {});
   console.log(
     prettyjson.render(result, { numberColor: "white", keysColor: "cyan" })
   );
