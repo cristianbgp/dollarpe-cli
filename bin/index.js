@@ -3,11 +3,11 @@ const prettyjson = require("prettyjson");
 const sortCriteriaGenerator = require("./sort-criteria");
 const getData = require("./get-data");
 
-const buyCriteriaDesc = sortCriteriaGenerator(item => item[1].buy, {
-  desc: true
+const buyCriteriaDesc = sortCriteriaGenerator((item) => item[1].buy, {
+  desc: true,
 });
 
-const greenText = text => `\x1b[32m${text}\x1b[0m`;
+const greenText = (text) => `\x1b[32m${text}\x1b[0m`;
 
 async function buildDollarObject() {
   const dollar = {};
@@ -15,21 +15,25 @@ async function buildDollarObject() {
     getData({
       url: "https://app.rextie.com/api/v1/fxrates/rate/",
       method: "POST",
-      accesorToBuy: data => Number(data.fx_rate_buy),
-      accesorToSell: data => Number(data.fx_rate_sell)
+      accesorToBuy: (data) => Number(data.fx_rate_buy),
+      accesorToSell: (data) => Number(data.fx_rate_sell),
     }),
     getData({
       url:
         "https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&active=S&amount=1",
-      accesorToBuy: data => data.tc.bid,
-      accesorToSell: data => data.tc.ask
+      accesorToBuy: (data) => data.tc.bid,
+      accesorToSell: (data) => data.tc.ask,
     }),
     getData({
-      url: "https://tkambio.com/wp-admin/admin-ajax.php?action=get_tipo_cambio",
+      url: "https://tkambio.com/wp-admin/admin-ajax.php",
       method: "POST",
-      accesorToBuy: data => Number(data.sell_type_change),
-      accesorToSell: data => Number(data.buy_type_change)
-    })
+      body: "action=get_exchange_rate",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+      accesorToBuy: (data) => Number(data.buying_rate),
+      accesorToSell: (data) => Number(data.selling_rate),
+    }),
   ]);
   let result = Object.entries(dollar).sort(buyCriteriaDesc);
 

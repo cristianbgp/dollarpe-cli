@@ -1,8 +1,17 @@
 const fetch = require("node-fetch");
 
-async function getData({ url, method = "GET", accesorToBuy, accesorToSell }) {
+async function getData({
+  url,
+  method = "GET",
+  body,
+  headers,
+  accesorToBuy,
+  accesorToSell,
+}) {
   const response = await fetch(url, {
-    method: method
+    method,
+    headers,
+    body,
   });
   const data = await response.json();
   return { buy: accesorToBuy(data), sell: accesorToSell(data) };
