@@ -11,7 +11,12 @@ const greenText = (text) => `\x1b[32m${text}\x1b[0m`;
 
 async function buildDollarObject() {
   const dollar = {};
-  [dollar.rextie, dollar.kambista, dollar.tkambio] = await Promise.all([
+  [
+    dollar.rextie,
+    dollar.kambista,
+    dollar.tkambio,
+    dollar.roblex,
+  ] = await Promise.all([
     getData({
       url: "https://app.rextie.com/api/v1/fxrates/rate/",
       method: "POST",
@@ -33,6 +38,11 @@ async function buildDollarObject() {
       },
       accesorToBuy: (data) => Number(data.buying_rate),
       accesorToSell: (data) => Number(data.selling_rate),
+    }),
+    getData({
+      url: "https://operations.roblex.pe/valuation/active-valuation",
+      accesorToBuy: (data) => Number(data.amountBuy),
+      accesorToSell: (data) => Number(data.amountSale),
     }),
   ]);
   let result = Object.entries(dollar).sort(buyCriteriaDesc);
