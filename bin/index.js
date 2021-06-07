@@ -16,6 +16,7 @@ async function buildDollarObject() {
     dollar.kambista,
     dollar.tkambio,
     dollar.roblex,
+    dollar.decamoney,
   ] = await Promise.all([
     getData({
       url: "https://app.rextie.com/api/v1/fxrates/rate/",
@@ -24,8 +25,7 @@ async function buildDollarObject() {
       accesorToSell: (data) => Number(data.fx_rate_sell),
     }),
     getData({
-      url:
-        "https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&active=S&amount=1",
+      url: "https://api.kambista.com/v1/exchange/calculates?originCurrency=USD&destinationCurrency=PEN&active=S&amount=1",
       accesorToBuy: (data) => data.tc.bid,
       accesorToSell: (data) => data.tc.ask,
     }),
@@ -43,6 +43,11 @@ async function buildDollarObject() {
       url: "https://operations.roblex.pe/valuation/active-valuation",
       accesorToBuy: (data) => Number(data.amountBuy),
       accesorToSell: (data) => Number(data.amountSale),
+    }),
+    getData({
+      url: "https://api.decamoney.com/v1/rates",
+      accesorToBuy: (data) => Number(data.exchange_rate.buy),
+      accesorToSell: (data) => Number(data.exchange_rate.sell),
     }),
   ]);
   let result = Object.entries(dollar).sort(buyCriteriaDesc);
