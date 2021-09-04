@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "ink";
+'use strict';
+const React = require("react");
+const { Text } = require("ink");
 
 const dots = {
 	interval: 80,
@@ -7,9 +8,9 @@ const dots = {
 };
 
 const Fallback = () => {
-	const [loader, setLoader] = useState(0);
+	const [loader, setLoader] = React.useState(0);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const timer = setInterval(() => {
 			setLoader((prevLoader) =>
 				dots.frames.length - 1 === prevLoader ? 0 : prevLoader + 1
@@ -24,5 +25,4 @@ const Fallback = () => {
 	return <Text>{dots.frames[loader]} Loading...</Text>;
 };
 
-// module.exports = Fallback;
-export default Fallback;
+module.exports = Fallback;
