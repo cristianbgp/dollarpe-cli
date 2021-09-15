@@ -49,7 +49,7 @@ function Wrapper() {
 
 	return (
 		<Box flexDirection="column">
-			{data?.map(([name, { buy, sell }], index) => (
+			{(data || []).map(([name, { buy, sell }], index) => (
 				<Item
 					key={name}
 					name={name}
