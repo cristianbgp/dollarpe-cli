@@ -10,18 +10,10 @@ const importJsx = require("import-jsx");
 const ErrorFallback = importJsx("./error-fallback");
 const Fallback = importJsx("./fallback");
 
-const pageUrls = {
-	roblex: "https://roblex.pe/",
-	rextie: "https://www.rextie.com/",
-	tkambio: "https://tkambio.com/",
-	decamoney: "https://decamoney.com/",
-	kambista: "https://kambista.com/",
-};
-
-function Item({ name, buy, sell, isFirst }) {
+function Item({ name, buy, sell, isFirst, pageUrl }) {
 	return (
 		<Box flexDirection="column">
-			<Link url={pageUrls[name]}>
+			<Link url={pageUrl}>
 				<Text color="red">{name}</Text>
 			</Link>
 			<Box flexDirection="column" marginLeft={2}>
@@ -49,12 +41,13 @@ function Wrapper() {
 
 	return (
 		<Box flexDirection="column">
-			{(data || []).map(([name, { buy, sell }], index) => (
+			{(data || []).map(([name, { buy, sell, pageUrl }], index) => (
 				<Item
 					key={name}
 					name={name}
 					buy={buy}
 					sell={sell}
+					pageUrl={pageUrl}
 					isFirst={index === 0}
 				/>
 			))}
