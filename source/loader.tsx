@@ -1,13 +1,12 @@
-'use strict';
-const React = require("react");
-const { Text } = require("ink");
+import React from "react";
+import { Text } from "ink";
 
 const dots = {
 	interval: 80,
 	frames: ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"],
 };
 
-const Fallback = () => {
+export default function Loader() {
 	const [loader, setLoader] = React.useState(0);
 
 	React.useEffect(() => {
@@ -23,6 +22,4 @@ const Fallback = () => {
 	}, []);
 
 	return <Text>{dots.frames[loader]} Loading...</Text>;
-};
-
-module.exports = Fallback;
+}

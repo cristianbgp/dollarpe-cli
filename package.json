@@ -1,50 +1,49 @@
 {
 	"name": "dollarpe",
-	"version": "2.0.8",
+	"version": "3.0.0",
 	"description": "dollar to peruvian sol exchange rate",
 	"author": "cristianbgp <cristian.granda.pastor@gmail.com>",
 	"license": "MIT",
-	"repository": "git@github.com:cristianbgp/dollarpe.git",
-	"main": "cli.js",
-	"bin": {
-		"dollarpe": "cli.js"
+	"repository": "git@github.com:cristianbgp/dollarpe-cli.git",
+	"bin": "dist/cli.js",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"dev": "bun run ./source/cli.tsx"
 	},
 	"keywords": [
 		"currency",
 		"dollar"
 	],
 	"engines": {
-		"node": ">=10"
+		"node": ">=16"
 	},
 	"files": [
-		"cli.js",
-		"ui.js",
-		"error-fallback.js",
-		"fallback.js"
+		"dist"
 	],
-	"dependencies": {
-		"import-jsx": "^4.0.0",
-		"ink": "^3.0.9",
-		"ink-link": "^2.0.0",
-		"isomorphic-fetch": "^3.0.0",
-		"meow": "^9.0.0",
-		"react": "^16.14.0",
-		"react-error-boundary": "^3.1.3",
-		"swr": "^1.0.0"
-	},
 	"babel": {
 		"presets": [
 			"@babel/preset-env",
 			"@babel/preset-react"
 		]
 	},
+	"dependencies": {
+		"ink": "^4.1.0",
+		"ink-link": "^4.1.0",
+		"meow": "^11.0.0",
+		"react": "^18.2.0",
+		"react-error-boundary": "^4.0.13",
+		"swr": "^2.2.5"
+	},
 	"devDependencies": {
-		"@babel/preset-env": "^7.15.4",
-		"@babel/preset-react": "^7.14.5",
-		"@babel/register": "^7.15.3",
-		"chalk": "^4.1.2",
-		"eslint-config-xo-react": "^0.25.0",
-		"eslint-plugin-react": "^7.25.1",
-		"eslint-plugin-react-hooks": "^4.2.0"
+		"@types/bun": "latest",
+		"@types/react": "^18.0.32",
+		"chalk": "^5.2.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"ink-testing-library": "^3.0.0",
+		"prettier": "^2.8.7",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.3"
 	}
 }

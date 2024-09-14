@@ -1,8 +1,7 @@
-'use strict';
-const React = require("react");
-const { Box, Text } = require("ink");
+import React from "react";
+import { Box, Text } from "ink";
 
-function ErrorFallback() {
+export default function ErrorFallback() {
 	return (
 		<Box flexDirection="column">
 			<Text color="red">Something went wrong ⚠️</Text>
@@ -10,5 +9,3 @@ function ErrorFallback() {
 		</Box>
 	);
 }
-
-module.exports = ErrorFallback;
