@@ -47,8 +47,11 @@ async function fetcher(url: string) {
 
 type ResponseData = [string, { buy: string; sell: string; pageUrl: string }][];
 
-function Wrapper() {
-	const { data, isLoading } = useSWR<ResponseData>(DOLLARPE_API, fetcher);
+function Wrapper({ sort }: { sort: "buy" | "sell" }) {
+	const { data, isLoading } = useSWR<ResponseData>(
+		`${DOLLARPE_API}?sort=${sort}`,
+		fetcher
+	);
 
 	if (isLoading) {
 		return <Loader />;
@@ -70,10 +73,10 @@ function Wrapper() {
 	);
 }
 
-export default function App() {
+export default function App({ sort = "buy" }: { sort: "buy" | "sell" }) {
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<Wrapper />
+			<Wrapper sort={sort} />
 		</ErrorBoundary>
 	);
 }
