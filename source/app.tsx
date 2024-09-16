@@ -14,12 +14,14 @@ function Item({
 	sell,
 	isFirst,
 	pageUrl,
+	sort,
 }: {
 	name: string;
 	buy: string;
 	sell: string;
 	isFirst: boolean;
 	pageUrl: string;
+	sort: "buy" | "sell";
 }) {
 	return (
 		<Box flexDirection="column">
@@ -29,11 +31,15 @@ function Item({
 			<Box flexDirection="column" marginLeft={2}>
 				<Box justifyContent="flex-start">
 					<Text color="blue">buy: </Text>
-					<Text color={isFirst ? "green" : "white"}>{buy}</Text>
+					<Text color={isFirst && sort === "buy" ? "green" : "white"}>
+						{buy}
+					</Text>
 				</Box>
 				<Box>
 					<Text color="blue">sell: </Text>
-					<Text color={isFirst ? "green" : "white"}>{sell}</Text>
+					<Text color={isFirst && sort === "sell" ? "green" : "white"}>
+						{sell}
+					</Text>
 				</Box>
 			</Box>
 		</Box>
@@ -67,6 +73,7 @@ function Wrapper({ sort }: { sort: "buy" | "sell" }) {
 					sell={sell}
 					pageUrl={pageUrl}
 					isFirst={index === 0}
+					sort={sort}
 				/>
 			))}
 		</Box>
@@ -74,6 +81,14 @@ function Wrapper({ sort }: { sort: "buy" | "sell" }) {
 }
 
 export default function App({ sort = "buy" }: { sort: "buy" | "sell" }) {
+	if (sort !== "buy" && sort !== "sell") {
+		return (
+			<Box flexDirection="column">
+				<Text color="red">Invalid sort option. Use 'buy' or 'sell'.</Text>
+			</Box>
+		);
+	}
+
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
 			<Wrapper sort={sort} />
